@@ -1,0 +1,48 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F877A ]
+[d frameptr 0 ]
+"10 /opt/microchip/xc8/v3.00/pic/sources/c99/common/sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 /opt/microchip/xc8/v3.00/pic/sources/c99/common/Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 /opt/microchip/xc8/v3.00/pic/sources/c99/pic/__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"35 /home/mateusszubuntu/MPLABXProjects/BootLoader.X/main.c
+[v _main main `(v  1 e 1 0 ]
+"1059 /opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h
+[v _TXREG TXREG `VEuc  1 e 1 @25 ]
+"1066
+[v _RCREG RCREG `VEuc  1 e 1 @26 ]
+"2080
+[v _SPBRG SPBRG `VEuc  1 e 1 @153 ]
+"2420
+[v _BRGH BRGH `VEb  1 e 0 @1218 ]
+"2519
+[v _CREN CREN `VEb  1 e 0 @196 ]
+"2567
+[v _FERR FERR `VEb  1 e 0 @194 ]
+"2618
+[v _OERR OERR `VEb  1 e 0 @193 ]
+"2747
+[v _RCIF RCIF `VEb  1 e 0 @101 ]
+"2798
+[v _RX9 RX9 `VEb  1 e 0 @198 ]
+"2816
+[v _SPEN SPEN `VEb  1 e 0 @199 ]
+"2846
+[v _SYNC SYNC `VEb  1 e 0 @1220 ]
+"3020
+[v _TRMT TRMT `VEb  1 e 0 @1217 ]
+"3026
+[v _TX9 TX9 `VEb  1 e 0 @1222 ]
+"3035
+[v _TXEN TXEN `VEb  1 e 0 @1221 ]
+"35 /home/mateusszubuntu/MPLABXProjects/BootLoader.X/main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"37
+} 0

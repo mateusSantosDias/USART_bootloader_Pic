@@ -1,4 +1,4 @@
-# 1 "main.c"
+# 1 "usart_driver.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 285 "<built-in>" 3
@@ -6,24 +6,10 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v3.00/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "main.c" 2
-# 13 "main.c"
-#pragma config FOSC = XT
-#pragma config WDTE = OFF
-#pragma config PWRTE = OFF
-#pragma config BOREN = OFF
-#pragma config LVP = ON
-#pragma config CPD = OFF
-#pragma config WRT = OFF
-#pragma config CP = OFF
-
-
-
-
-
-
-
-
+# 1 "usart_driver.c" 2
+# 23 "usart_driver.c"
+# 1 "./usart_driver.h" 1
+# 34 "./usart_driver.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -1912,49 +1898,38 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 2 3
-# 30 "main.c" 2
-# 1 "./usart_driver.h" 1
+# 35 "./usart_driver.h" 2
 # 52 "./usart_driver.h"
     void Usart_Init();
     void Usart_Transmit(uint8_t Message);
     uint8_t Usart_Receive();
-# 31 "main.c" 2
-
-void boot_loader();
-void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
-
-void __attribute__((section("bootloader")))boot_loader()
+# 24 "usart_driver.c" 2
+# 137 "usart_driver.c"
+void Usart_Init()
 {
-    write_page(0x0000, 0x01, 0x01);
-
+    SPBRG = ((4000000/(16 * 155200))- 1);
+    BRGH = 0x01;
+    SYNC = 0x00;
+    SPEN = 0x01;
+    TX9 = 0x00;
+    RX9 = 0x00;
 }
 
-void __attribute__((section("bootloader"))) main(void)
+void Usart_Transmit(uint8_t Message)
 {
-    boot_loader();
-    while(1);
+    while(!TRMT) continue;
+    TXEN = 0x01;
+    TXREG = Message;
 }
 
-
-void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
+uint8_t Usart_Receive()
 {
-    EEADRH = addressH;
-    EEADR = addressL;
-
-    EEDATH = (data>>8);
-    EEDATA = (data&0xFF);
-
-    EECON1bits.EEPGD = 0x01;
-    EECON1bits.WREN = 0x01;
-    INTCONbits.GIE = 0x00;
-
-    EECON2 = 0x55;
-    EECON2 = 0xAA;
-    EECON1bits.WR = 0x01;
-
-    __asm__("NOP");
-    __asm__("NOP");
-
-    EECON1bits.WREN = 0x00;
-
+    CREN = 0x01;
+    while(!RCIF) continue;
+    if(FERR | OERR)
+    {
+        FERR = 0x00;
+        OERR = 0x00;
+    }
+    return RCREG;
 }

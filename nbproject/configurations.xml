@@ -159,6 +159,7 @@
         <property key="opt-xc8-linker-serial" value=""/>
         <property key="program-the-device-with-default-config-words" value="false"/>
         <property key="remove-unused-sections" value="true"/>
+        <appendMe value="-Wl,-ABOOT=0x0010-0x0100 -Wl,-Pbootloader=BOOT -mreserve=rom@0x0010:0x0100 -mreserve=rom@0x0101:0xffff"/>
       </HI-TECH-LINK>
       <Simulator>
         <property key="codecoverage.enabled" value="Disable"/>

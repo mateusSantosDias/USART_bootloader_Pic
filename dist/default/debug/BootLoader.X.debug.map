@@ -3,12 +3,12 @@ Microchip MPLAB XC8 Compiler V3.00
 Linker command line:
 
 -W-3 --edf=/opt/microchip/xc8/v3.00/pic/dat/20241204225717_en.msgs -cn \
-  -h+dist/default/production/BootLoader.X.production.sym \
-  --cmf=dist/default/production/BootLoader.X.production.cmf -z -Q16F877A \
-  -o/tmp/xcXOkiMhN/driver_tmp_3.o --defsym=__MPLAB_BUILD=1 \
+  -h+dist/default/debug/BootLoader.X.debug.sym \
+  --cmf=dist/default/debug/BootLoader.X.debug.cmf -z -Q16F877A \
+  -o/tmp/xcXhACnPk/driver_tmp_3.o --defsym=__MPLAB_BUILD=1 \
   -ABOOT=0x0010-0x0100 -Pbootloader=BOOT --fixupoverflow=error \
-  -Mdist/default/production/BootLoader.X.production.map \
-  --md=/tmp/xcXOkiMhN/driver_tmp_0.dat -E1 -ver=XC8 Compiler -ACODE=00h-0Fh \
+  -Mdist/default/debug/BootLoader.X.debug.map \
+  --md=/tmp/xcXhACnPk/driver_tmp_0.dat -E1 -ver=XC8 Compiler -ACODE=00h-0Fh \
   -ASTRCODE=00h-0Fh -ASTRING=00h-0Fh -ACONST=00h-0Fh -AENTRY=00h-0Fh \
   -ACOMMON=070h-07Fh -ABANK0=020h-06Fh -ABANK1=0A0h-0EFh \
   -ABANK2=0110h-016Fh -ABANK3=0190h-01EFh \
@@ -19,8 +19,8 @@ Linker command line:
   -AEEDATA=00h-0FFh/02100h -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 \
   -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
   -preset_vec=00h,intentry,sivt,init,end_init -ppowerup=CODE -pcinit=CODE \
-  -pfunctab=ENTRY -k /tmp/xcXOkiMhN/driver_tmp_12.o \
-  dist/default/production/BootLoader.X.production.o 
+  -pfunctab=ENTRY -k /tmp/xcXhACnPk/driver_tmp_12.o \
+  dist/default/debug/BootLoader.X.debug.o 
 
 Object code version is 3.11
 
@@ -29,10 +29,10 @@ Machine type is 16F877A
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/xcXOkiMhN/driver_tmp_12.o
+/tmp/xcXhACnPk/driver_tmp_12.o
                 end_init                              0        0        3        0       0
                 config                             2007     2007        1        0       4
-dist/default/production/BootLoader.X.production.o
+dist/default/debug/BootLoader.X.debug.o
                 cinit                                 3        3        4        0       0
                 config                             2007     2007        1        0       4
                 bootloader                            8        8       30       10       0

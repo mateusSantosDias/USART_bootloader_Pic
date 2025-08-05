@@ -135,8 +135,8 @@ bootloader 10 6F BOOT 10 0
 reset_vec 0 D CODE 0 0
 cstackCOMMON 70 73 COMMON 70 1
 %locals
-dist/default/production/BootLoader.X.production.o
-/tmp/xcXOkiMhN/driver_tmp_1.s
+dist/default/debug/BootLoader.X.debug.o
+/tmp/xcXhACnPk/driver_tmp_1.s
 512 3 0 CODE 0
 515 3 0 CODE 0
 521 3 0 CODE 0

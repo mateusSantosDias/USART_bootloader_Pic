@@ -22,29 +22,30 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
-#define INITIAL_PAGEH 0x08
-#define INITIAL_PAGEL 0x00
+#define INITIAL_PAGEH 0x01
+#define INITIAL_PAGEL 0x01
 
 
 #include <xc.h>
 #include "usart_driver.h"
 
 void boot_loader();
-void write_page(uint8_t addr, uint8_t data);
+void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
 
-
-
-void main(void) {
-    return;
-}
-
-
-void boot_loader()
+void  __section("bootloader")boot_loader()
 {
+    write_page(0x0000, INITIAL_PAGEH, INITIAL_PAGEL);
 
 }
 
-void write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
+void __section("bootloader") main(void)
+{   
+    boot_loader();
+    while(1);
+}
+
+
+void  __section("bootloader")write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
 {
     EEADRH = addressH;
     EEADR  = addressL;
@@ -52,17 +53,17 @@ void write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
     EEDATH = (data>>8);
     EEDATA = (data&0xFF);
     
-    EECON1bits_t.EEPGD  = 0x01;
-    EECON1bits_t.WREN   = 0x01;
-    INTCONbits_t.GIE    = 0x00;
+    EECON1bits.EEPGD  = 0x01;
+    EECON1bits.WREN   = 0x01;
+    INTCONbits.GIE    = 0x00;
     
     EECON2 = 0x55;
     EECON2 = 0xAA;
-    EECON1bits_t.WR     = 0x01;
+    EECON1bits.WR     = 0x01;
     
     __asm__("NOP");
     __asm__("NOP");
     
-    EECON1bits_t.WREN   = 0x00;
+    EECON1bits.WREN   = 0x00;
     
 } 

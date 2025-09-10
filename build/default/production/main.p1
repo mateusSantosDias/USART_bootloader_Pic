@@ -1,12 +1,23 @@
 Version 4.0 HI-TECH Software Intermediate Code
 [x X1 bootloader ]
-"33 main.c
-[; ;main.c: 33: void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
+"35 main.c
+[; ;main.c: 35: void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
 [v _write_page `(v ~T0 @X0 0 ef3`us`uc`uc ]
 [x X2 bootloader ]
 [p mainexit ]
 [x X3 bootloader ]
-"2309 /opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h
+"2322 /opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h
+[; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2322:     struct {
+[s S98 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 ]
+[n S98 . RD WR WREN WRERR . EEPGD ]
+"2321
+[; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2321: typedef union {
+[u S97 `S98 1 ]
+[n S97 . . ]
+"2331
+[; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2331: extern volatile EECON1bits_t EECON1bits __attribute__((address(0x18C)));
+[v _EECON1bits `VS97 ~T0 @X0 0 e@396 ]
+"2309
 [; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2309: extern volatile unsigned char EEADRH __attribute__((address(0x10F)));
 [v _EEADRH `Vuc ~T0 @X0 0 e@271 ]
 "2295
@@ -18,17 +29,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2288
 [; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2288: extern volatile unsigned char EEDATA __attribute__((address(0x10C)));
 [v _EEDATA `Vuc ~T0 @X0 0 e@268 ]
-"2322
-[; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2322:     struct {
-[s S98 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 ]
-[n S98 . RD WR WREN WRERR . EEPGD ]
-"2321
-[; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2321: typedef union {
-[u S97 `S98 1 ]
-[n S97 . . ]
-"2331
-[; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2331: extern volatile EECON1bits_t EECON1bits __attribute__((address(0x18C)));
-[v _EECON1bits `VS97 ~T0 @X0 0 e@396 ]
 "460
 [; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 460:     struct {
 [s S22 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -243,98 +243,117 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2363
 [; ;/opt/microchip/mplabx/v6.25/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f877a.h: 2363: __asm("EECON2 equ 018Dh");
 [; <" EECON2 equ 018Dh ;# ">
-"35 main.c
-[; ;main.c: 35: void __attribute__((section("bootloader")))boot_loader()
+"37 main.c
+[; ;main.c: 37: void __attribute__((section("bootloader")))boot_loader()
 [v _boot_loader `(v ~T0 @X1 1 ef ]
-"36
-[; ;main.c: 36: {
+"38
+[; ;main.c: 38: {
 {
 [e :U _boot_loader ]
 [f ]
-"37
-[; ;main.c: 37:     write_page(0x0000, 0x01, 0x01);
-[e ( _write_page (3 , , -> -> 0 `i `us -> -> 1 `i `uc -> -> 1 `i `uc ]
-"39
-[; ;main.c: 39: }
+"40
+[; ;main.c: 40:      for(uint16_t i = 0x0100; i < 0x1000; i++)
+{
+[v _i `us ~T0 @X0 1 a ]
+[e = _i -> -> 256 `i `us ]
+[e $ < -> _i `ui -> -> 4096 `i `ui 100  ]
+[e $U 101  ]
+[e :U 100 ]
+"41
+[; ;main.c: 41:         {
+{
+"42
+[; ;main.c: 42:            write_page(0x0000,(i&0xff), (i>>8));
+[e ( _write_page (3 , , -> -> 0 `i `us -> & -> _i `ui -> -> 255 `i `ui `uc -> >> -> _i `ui -> 8 `i `uc ]
+"43
+[; ;main.c: 43:         }
+}
+[e ++ _i -> -> 1 `i `us ]
+[e $ < -> _i `ui -> -> 4096 `i `ui 100  ]
+[e :U 101 ]
+}
+"46
+[; ;main.c: 46: }
 [e :UE 99 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"41
-[; ;main.c: 41: void __attribute__((section("bootloader"))) main(void)
+"48
+[; ;main.c: 48: void __attribute__((section("bootloader"))) main(void)
 [v _main `(v ~T0 @X2 1 ef ]
-"42
-[; ;main.c: 42: {
+"49
+[; ;main.c: 49: {
 {
 [e :U _main ]
 [f ]
-"43
-[; ;main.c: 43:     boot_loader();
+"50
+[; ;main.c: 50:     boot_loader();
 [e ( _boot_loader ..  ]
-"44
-[; ;main.c: 44:     while(1);
-[e :U 102 ]
-[e :U 101 ]
-[e $U 102  ]
-[e :U 103 ]
-"45
-[; ;main.c: 45: }
-[e :UE 100 ]
+"51
+[; ;main.c: 51: }
+[e :UE 103 ]
 }
-"48
-[; ;main.c: 48: void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
+"54
+[; ;main.c: 54: void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
 [v _write_page `(v ~T0 @X3 1 ef3`us`uc`uc ]
-"49
-[; ;main.c: 49: {
+"55
+[; ;main.c: 55: {
 {
 [e :U _write_page ]
-"48
-[; ;main.c: 48: void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
+"54
+[; ;main.c: 54: void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
 [v _data `us ~T0 @X0 1 r1 ]
 [v _addressH `uc ~T0 @X0 1 r2 ]
 [v _addressL `uc ~T0 @X0 1 r3 ]
-"49
-[; ;main.c: 49: {
+"55
+[; ;main.c: 55: {
 [f ]
-"50
-[; ;main.c: 50:     EEADRH = addressH;
-[e = _EEADRH _addressH ]
-"51
-[; ;main.c: 51:     EEADR = addressL;
-[e = _EEADR _addressL ]
-"53
-[; ;main.c: 53:     EEDATH = (data>>8);
-[e = _EEDATH -> >> -> _data `ui -> 8 `i `uc ]
-"54
-[; ;main.c: 54:     EEDATA = (data&0xFF);
-[e = _EEDATA -> & -> _data `ui -> -> 255 `i `ui `uc ]
 "56
-[; ;main.c: 56:     EECON1bits.EEPGD = 0x01;
-[e = . . _EECON1bits 0 5 -> -> 1 `i `uc ]
-"57
-[; ;main.c: 57:     EECON1bits.WREN = 0x01;
-[e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
+[; ;main.c: 56:     while(EECON1bits.WR);
+[e $U 105  ]
+[e :U 106 ]
+[e :U 105 ]
+[e $ != -> . . _EECON1bits 0 1 `i -> 0 `i 106  ]
+[e :U 107 ]
 "58
-[; ;main.c: 58:     INTCONbits.GIE = 0x00;
-[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
-"60
-[; ;main.c: 60:     EECON2 = 0x55;
-[e = _EECON2 -> -> 85 `i `uc ]
+[; ;main.c: 58:     EEADRH = addressH;
+[e = _EEADRH _addressH ]
+"59
+[; ;main.c: 59:     EEADR = addressL;
+[e = _EEADR _addressL ]
 "61
-[; ;main.c: 61:     EECON2 = 0xAA;
-[e = _EECON2 -> -> 170 `i `uc ]
+[; ;main.c: 61:     EEDATH = (data>>8);
+[e = _EEDATH -> >> -> _data `ui -> 8 `i `uc ]
 "62
-[; ;main.c: 62:     EECON1bits.WR = 0x01;
-[e = . . _EECON1bits 0 1 -> -> 1 `i `uc ]
+[; ;main.c: 62:     EEDATA = (data&0xFF);
+[e = _EEDATA -> & -> _data `ui -> -> 255 `i `ui `uc ]
 "64
-[; ;main.c: 64:     __asm__("NOP");
-[; <" NOP ;# ">
+[; ;main.c: 64:     EECON1bits.EEPGD = 0x01;
+[e = . . _EECON1bits 0 5 -> -> 1 `i `uc ]
 "65
-[; ;main.c: 65:     __asm__("NOP");
-[; <" NOP ;# ">
-"67
-[; ;main.c: 67:     EECON1bits.WREN = 0x00;
-[e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 65:     EECON1bits.WREN = 0x01;
+[e = . . _EECON1bits 0 2 -> -> 1 `i `uc ]
+"66
+[; ;main.c: 66:     INTCONbits.GIE = 0x00;
+[e = . . _INTCONbits 0 7 -> -> 0 `i `uc ]
+"68
+[; ;main.c: 68:     EECON2 = 0x55;
+[e = _EECON2 -> -> 85 `i `uc ]
 "69
-[; ;main.c: 69: }
+[; ;main.c: 69:     EECON2 = 0xAA;
+[e = _EECON2 -> -> 170 `i `uc ]
+"70
+[; ;main.c: 70:     EECON1bits.WR = 0x01;
+[e = . . _EECON1bits 0 1 -> -> 1 `i `uc ]
+"72
+[; ;main.c: 72:     __asm__("NOP");
+[; <" NOP ;# ">
+"73
+[; ;main.c: 73:     __asm__("NOP");
+[; <" NOP ;# ">
+"75
+[; ;main.c: 75:     EECON1bits.WREN = 0x00;
+[e = . . _EECON1bits 0 2 -> -> 0 `i `uc ]
+"77
+[; ;main.c: 77: }
 [e :UE 104 ]
 }

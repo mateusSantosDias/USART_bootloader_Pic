@@ -1913,37 +1913,51 @@ extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 2 3
 # 30 "main.c" 2
+
+
 # 1 "./usart_driver.h" 1
 # 52 "./usart_driver.h"
     void Usart_Init();
     void Usart_Transmit(uint8_t Message);
     uint8_t Usart_Receive();
-# 31 "main.c" 2
+# 33 "main.c" 2
 
 void boot_loader();
-void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
+uint16_t write_page(uint16_t data, uint16_t addr);
 
 void __attribute__((section("bootloader")))boot_loader()
 {
-    write_page(0x0000, 0x01, 0x01);
+    uint16_t addr_resolve = 0x0200;
+
+     for(; addr_resolve < 0x1000;)
+        {
+           addr_resolve = write_page(0x0000,addr_resolve);
+           addr_resolve = write_page(0x5555,addr_resolve);
+        }
+
 
 }
 
 void __attribute__((section("bootloader"))) main(void)
 {
     boot_loader();
-    while(1);
 }
 
 
-void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
+uint16_t __attribute__((section("bootloader")))write_page(uint16_t data, uint16_t addr)
 {
-    EEADRH = addressH;
-    EEADR = addressL;
+    while(EECON1bits.WR);
+    uint16_t addr_return = addr;
 
-    EEDATH = (data>>8);
-    EEDATA = (data&0xFF);
 
+    EEADRH = addr >> 8;
+    EEADR = addr & 0xFF;
+
+
+
+
+    EEDATH = (data >> 8) & 0x3F;
+    EEDATA = (data & 0xFF);
     EECON1bits.EEPGD = 0x01;
     EECON1bits.WREN = 0x01;
     INTCONbits.GIE = 0x00;
@@ -1956,5 +1970,5 @@ void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t add
     __asm__("NOP");
 
     EECON1bits.WREN = 0x00;
-
+    return addr+=1;
 }

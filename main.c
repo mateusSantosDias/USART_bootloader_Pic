@@ -23,36 +23,50 @@
 // Use project enums instead of #define for ON and OFF.
 
 #define INITIAL_PAGEH 0x01
-#define INITIAL_PAGEL 0x01
+#define INITIAL_PAGEL 0x04
 
 
 #include <xc.h>
+#include <stdint.h>
+#include <pic16f877a.h>
 #include "usart_driver.h"
 
 void boot_loader();
-void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
+uint16_t write_page(uint16_t data, uint16_t addr);
 
 void  __section("bootloader")boot_loader()
 {
-    write_page(0x0000, INITIAL_PAGEH, INITIAL_PAGEL);
+    uint16_t addr_resolve = 0x0200;
+    
+     for(; addr_resolve < 0x1000;)
+        {
+           addr_resolve = write_page(0x0000,addr_resolve);
+           addr_resolve = write_page(0x5555,addr_resolve);
+        }
+            
 
 }
 
 void __section("bootloader") main(void)
-{   
+{  
     boot_loader();
-    while(1);
 }
 
 
-void  __section("bootloader")write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
+uint16_t  __section("bootloader")write_page(uint16_t data, uint16_t addr)
 {
-    EEADRH = addressH;
-    EEADR  = addressL;
+    while(EECON1bits.WR);
+    uint16_t addr_return = addr;
     
-    EEDATH = (data>>8);
-    EEDATA = (data&0xFF);
     
+    EEADRH = addr >> 8;
+    EEADR = addr  & 0xFF;
+        
+    //addr_return++;
+        
+
+    EEDATH = (data >> 8) & 0x3F;
+    EEDATA = (data  & 0xFF);
     EECON1bits.EEPGD  = 0x01;
     EECON1bits.WREN   = 0x01;
     INTCONbits.GIE    = 0x00;
@@ -65,5 +79,5 @@ void  __section("bootloader")write_page(uint16_t data, uint8_t addressH, uint8_t
     __asm__("NOP");
     
     EECON1bits.WREN   = 0x00;
-    
+    return addr+=1;
 } 

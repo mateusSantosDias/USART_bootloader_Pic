@@ -1913,31 +1913,39 @@ extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 29 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 2 3
 # 30 "main.c" 2
+
+
 # 1 "./usart_driver.h" 1
 # 52 "./usart_driver.h"
     void Usart_Init();
     void Usart_Transmit(uint8_t Message);
     uint8_t Usart_Receive();
-# 31 "main.c" 2
+# 33 "main.c" 2
 
 void boot_loader();
 void write_page(uint16_t data, uint8_t addressH, uint8_t addressL);
 
 void __attribute__((section("bootloader")))boot_loader()
 {
-    write_page(0x0000, 0x01, 0x01);
+
+     for(uint16_t i = 0x0100; i < 0x1000; i++)
+        {
+           write_page(0x0000,(i&0xff), (i>>8));
+        }
+
 
 }
 
 void __attribute__((section("bootloader"))) main(void)
 {
     boot_loader();
-    while(1);
 }
 
 
 void __attribute__((section("bootloader")))write_page(uint16_t data, uint8_t addressH, uint8_t addressL)
 {
+    while(EECON1bits.WR);
+
     EEADRH = addressH;
     EEADR = addressL;
 
